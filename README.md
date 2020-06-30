@@ -3,8 +3,8 @@
 
 #### __*Collaborators*__
 
-###### Justin Roose
-###### George Blake
-###### Jasmine Bailey
-###### Michael Marcucci
-###### Michael Olshewski
+Justin Roose
+George Blake
+Jasmine Bailey
+Michael Marcucci
+Michael Olshewski
