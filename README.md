@@ -3,8 +3,8 @@
 
 #### __*Collaborators*__
 
-Justin Roose  
-George Blake  
-Jasmine Bailey  
-Michael Marcucci  
-Michael Olshewski  
+__Justin Roose__ HTML/CSS/ Bulma CSS Framework
+__George Blake__ 
+__Jasmine Bailey__ HTML/CSS / Bulma CSS Framework
+__Michael Marcucci__ JavaScript/jQuery/Logic
+__Michael Olshewski__ HTML/BulmaCSS/JS
