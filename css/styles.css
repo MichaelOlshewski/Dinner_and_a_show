@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
+
+
+
+body {
+    background: url(../images/bg2.jpg) no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(8px);
+}
+
+.has-fancy-text {
+    font-family: 'Oleo Script', cursive;
+}
+
+.searchGroup {
+    width: 60%;
+}
