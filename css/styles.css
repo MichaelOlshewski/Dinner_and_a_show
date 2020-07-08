@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 
 
 body {
-    background: url(../images/bg2.jpg) no-repeat center center fixed;
+    background: url(../images/bg3.jpeg) no-repeat center center fixed;
     background-size: cover;
     backdrop-filter: blur(8px);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .has-fancy-text {
@@ -14,4 +16,10 @@ body {
 
 .searchGroup {
     width: 60%;
+    padding-top: 30px;
+    margin-bottom:30px;
+}
+
+.searchCardTitle {
+    padding-top: 15px;
 }
