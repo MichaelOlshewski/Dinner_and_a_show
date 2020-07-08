@@ -1,4 +1,4 @@
-# Dinner_and_a_show
+# Dinner and a show
 
 
 #### __*Collaborators*__
