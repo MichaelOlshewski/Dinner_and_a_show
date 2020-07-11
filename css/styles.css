@@ -23,3 +23,7 @@ body {
 .searchCardTitle {
     padding-top: 15px;
 }
+
+.hide {
+    display: none;
+}
