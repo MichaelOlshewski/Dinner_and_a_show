@@ -27,3 +27,15 @@ body {
 .hide {
     display: none;
 }
+
+#songkickIcon {
+    width: 150px;
+}
+
+.w-800 {
+    width: 80rem;
+}
+
+.w-80-percent {
+    width: 80%;
+}

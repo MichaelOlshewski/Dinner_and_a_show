@@ -38,17 +38,28 @@
       </div>
     </div>
   </div>
+  <div class="modal ie-scroll-fix" id="eventInfoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content w-80-percent"> <!-- w-600 = width: 60rem (600px) -->
+        <a href="#" class="close" role="button" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </a>
+        <!-- Long scrollable content here -->
+        <div class="container">
+          <h2 class="text-center">Event Name Here</h2>
+          <h4 class="text-center">Event Location Here</h4>
+          <hr>
+          <h5 class="text-center">Event Date Here</h5>
+          <div class="widget_wrap mr-auto ml-auto" style="width:100%;height:504px;display:inline-block;"><iframe src="https://www.zomato.com/widgets/res_search_widget.php?lat=41.505493&lon=-81.681290&theme=red&hideCitySearch=on&hideResSearch=on&widgetType=large&sort=distance" style="position:relative;width:100%;height:100%;" border="0" frameborder="0"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Page wrapper start -->
   <div class="page-wrapper with-navbar">
-    <!-- Sticky alerts (toasts), empty container -->
-    <div class="sticky-alerts"></div>
-
     <!-- Navbar start -->
     <nav class="navbar">
-      <div class="navbar-content">
-        <a class="btn" href="#"><i class="fas fa-home"></i></a>
-      </div>
       <a href="#" class="navbar-brand has-fancy-text ml-auto mr-auto">
           Dinner & A Show
       </a>
@@ -60,14 +71,12 @@
 
     <!-- Content wrapper start -->
     <div class="content-wrapper">
-      <!--
-        Add your page's main content here
-        Examples:
-        1. https://www.gethalfmoon.com/docs/content-and-cards/#building-a-page
-        2. https://www.gethalfmoon.com/docs/grid-system/#building-a-dashboard
-      -->
         <div class="container" style="margin-top: 100px;">
             <div class="card text-center" id="searchCard">
+                <div class="alert alert-danger hide" role="alert">
+                  <h4 class="alert-heading">Search Error</h4>
+                  There was an error with your search! Please Try Again!
+                </div>
                 <h1 class="card-title text-center searchCardTitle">
                     Search for Events and Food
                 </h1>
@@ -75,9 +84,9 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
                     </div>
-                    <input type="text" name="" id="locationInput" class="form-control" placeholder="eg: Cleveland, OH..." >
+                    <input type="text" name="locationInput" id="locationInput" class="form-control" placeholder="eg: Cleveland, OH..." >
                     <div class="input-group-append">
-                      <button class="btn">Search</button>
+                      <button id="searchBtnArtist" class="btn">Search</button>
                     </div>
                 </div>
                 OR
@@ -85,77 +94,30 @@
                   <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-search"></i></span>
                   </div>
-                  <input type="text" name="" id="artistInput" class="form-control" placeholder="Find an artist...">
+                  <input type="text" name="artistInput" id="artistInput" class="form-control" placeholder="Find an artist...">
                   <div class="input-group-append">
-                      <button class="btn">Search</button>
+                      <button id="searchBtnCity" class="btn">Search</button>
                   </div>
                 </div>
             </div>
-
-            <div class="card hide" style="margin-top: 150px;" id="eventsCards">
+            <div class="card" style="margin-top: 150px;" id="eventsCards">
               <h2 class="card-title">
                 Events Near You
               </h2>
               <div class="container-fluid">
-                <div class="row">
-                  <div class="col-sm">
-                    <div class="w-300 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
-                      <div class="card">
-                        <img src="http://placehold.it/200x200" alt="PlaceHolder Image" class="img-fluid rounded">
-                        <h2 class="card-title">
-                          Event #1
-                        </h2>
-                        <p class="text-muted">
-                          Event Information #1
-                        </p>
-                        <div class="text-right"> <!-- text-right = text-align: right -->
-                          <a href="events.html" class="btn">Get Info</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="w-300 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
-                      <div class="card">
-                        <img src="http://placehold.it/200x200" alt="PlaceHolder Image" class="img-fluid rounded">
-                        <h2 class="card-title">
-                          Event #2
-                        </h2>
-                        <p class="text-muted">
-                          Event Information #2
-                        </p>
-                        <div class="text-right"> <!-- text-right = text-align: right -->
-                          <a href="events.html" class="btn">Get Info</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="w-300 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
-                      <div class="card">
-                        <img src="http://placehold.it/200x200" alt="PlaceHolder Image" class="img-fluid rounded">
-                        <h2 class="card-title">
-                          Event #3
-                        </h2>
-                        <p class="text-muted">
-                          Event information #3
-                        </p>
-                        <div class="text-right"> <!-- text-right = text-align: right -->
-                          <a href="events.html" class="btn">Get Info</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div id="event-listings" class="row">
+                  
                 </div>
               </div>
             </div>
+          </div>
         </div>
-
     </div>
     <!-- Content wrapper end -->
   </div>
   <!-- Page wrapper end -->
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
   <script src="js/halfmoon.js"></script>
   <script>
     function emptyStorage() {
@@ -168,9 +130,10 @@
       // Built-in function
       halfmoon.initStickyAlert({
         content: alertContent,      // Required, main content of the alert, type: string (can contain HTML)
-        title: "Storage Alert"      // Optional, title of the alert, default: "", type: string
+        title: "Local Storage Emptied"      // Optional, title of the alert, default: "", type: string
       })
     };
   </script>
+  <script src="js/script.js"></script>
 </body>
 </html>
