@@ -45,12 +45,12 @@
           <span aria-hidden="true">&times;</span>
         </a>
         <!-- Long scrollable content here -->
-        <div class="container">
-          <h2 class="text-center">Event Name Here</h2>
-          <h4 class="text-center">Event Location Here</h4>
+        <div class="container" id="eventInfoModalContent">
+          <h2 class="text-center" id="eventModalName"></h2>
+          <h4 class="text-center" id="eventModalLocation"></h4>
           <hr>
-          <h5 class="text-center">Event Date Here</h5>
-          <div class="widget_wrap mr-auto ml-auto" style="width:100%;height:504px;display:inline-block;"><iframe src="https://www.zomato.com/widgets/res_search_widget.php?lat=41.505493&lon=-81.681290&theme=red&hideCitySearch=on&hideResSearch=on&widgetType=large&sort=distance" style="position:relative;width:100%;height:100%;" border="0" frameborder="0"></iframe></div>
+          <h5 class="text-center" id="eventModalDate"></h5>
+          <div class="widget_wrap mr-auto ml-auto" style="width:100%;height:504px;display:inline-block;"><iframe id="zomatoWidget" style="position:relative;width:100%;height:100%;" border="0" frameborder="0"></iframe></div>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
     <div class="content-wrapper">
         <div class="container" style="margin-top: 100px;">
             <div class="card text-center" id="searchCard">
-                <div class="alert alert-danger hide" role="alert">
+                <div class="alert alert-danger hide" id="emptyInputError" role="alert">
                   <h4 class="alert-heading">Search Error</h4>
                   There was an error with your search! Please Try Again!
                 </div>
@@ -86,7 +86,7 @@
                     </div>
                     <input type="text" name="locationInput" id="locationInput" class="form-control" placeholder="eg: Cleveland, OH..." >
                     <div class="input-group-append">
-                      <button id="searchBtnArtist" class="btn">Search</button>
+                      <button id="searchBtnCity" class="btn">Search</button>
                     </div>
                 </div>
                 OR
@@ -96,7 +96,7 @@
                   </div>
                   <input type="text" name="artistInput" id="artistInput" class="form-control" placeholder="Find an artist...">
                   <div class="input-group-append">
-                      <button id="searchBtnCity" class="btn">Search</button>
+                      <button id="searchBtnArtist" class="btn">Search</button>
                   </div>
                 </div>
             </div>
@@ -119,6 +119,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
   <script src="js/halfmoon.js"></script>
+  <script src="js/script.js"></script>
   <script>
     function emptyStorage() {
       localStorage.clear();
@@ -134,6 +135,5 @@
       })
     };
   </script>
-  <script src="js/script.js"></script>
 </body>
 </html>

@@ -2,17 +2,14 @@ $(document).ready(function () {
 
 	// Global Variables
 	var songKickKey = "1GlKTntzLGzcOL9Q";
-	var artistEventArr = [];
-	var cityEventArr = [];
-	var eventLat;
-	var eventLng;
+    var eventArr = [];
 	
 	// This uses the texbox input to search for an aritst by name
 	getArtist = () => {
 		var artistName = $("#artistInput").val();      
 	
 		$.ajax({
-			url: "https://api.songkick.com/api/3.0/search/artists.json?apikey="+songKickKey+"&query="+artistName,
+			url: "https://api.songkick.com/api/3.0/search/artists.json?apikey=" + songKickKey + "&query=" + artistName,
 			method: "GET",
 		}).then(function(responseArtist) {
 			console.log(responseArtist);
@@ -30,13 +27,18 @@ $(document).ready(function () {
 	// This uses the artist's ID to search for the artist's concert calendar.
 	getArtistEvents = (id) => {
 		$.ajax({
-			url: "https://api.songkick.com/api/3.0/artists/"+id+"/calendar.json?apikey="+songKickKey,
-			method: "GET"
+			url: "https://api.songkick.com/api/3.0/artists/" + id + "/calendar.json?apikey=" + songKickKey,
+			method: "GET",
+            error: function() {
+                $("#emptyInputError").removeClass("hide");
+            }
 		}).then(function(responseArtistCalendar) {
-			console.log(responseArtistCalendar);
+            console.log(responseArtistCalendar);
+            
+            $("#emptyInputError").addClass("hide")
 
 			// This puts the artist's events into an array.
-			artistEventArr = responseArtistCalendar.resultsPage.results.event;
+			eventArr = responseArtistCalendar.resultsPage.results.event;
 			
 			// This puts the event's name and info into variables.
 			var eventName = responseArtistCalendar.resultsPage.results.event[0].displayName;
@@ -44,31 +46,33 @@ $(document).ready(function () {
 			var eventLocation = responseArtistCalendar.resultsPage.results.event[0].location.city;
 		
 			// For loop to cycle through the array of events.
-			for (var i = 0; i < artistEventArr.length; i++){
+			for (var i = 0; i < eventArr.length; i++){
 				
 				// This finds the artist's ID for each event in the loop.
 				eventArtist = responseArtistCalendar.resultsPage.results.event[i].performance[0].artist.id;
 				
 				// This sets each event name to a variable.
-				eventName = artistEventArr[i].displayName;
+				eventName = eventArr[i].displayName;
 				
 				// This sets each event's age restriction to a variable.
-				eventAge = artistEventArr[i].ageRestriction;
+				eventAge = eventArr[i].ageRestriction;
 				
 				// This sets each event's city to a variable.
-				eventLocation = artistEventArr[i].location.city;
+				eventLocation = eventArr[i].location.city;
 				
 				// This puts the event's latitutude location into a variable.
 				eventLat = responseArtistCalendar.resultsPage.results.event[0].location.lat;
 				
 				// This puts the event's longitude location into a variable.
-				eventLng = responseArtistCalendar.resultsPage.results.event[0].location.lng;
+                eventLng = responseArtistCalendar.resultsPage.results.event[0].location.lng;
+                
+                eventURI = responseArtistCalendar.resultsPage.results.event[i].uri;
 
 				// If statement to check condition of age restriction and return an answer if null.
 				if (!eventAge) {
 					eventAge = "None."
 				} else {
-					eventAge = artistEventArr[i].ageRestriction;
+					eventAge = eventArr[i].ageRestriction;
 				}
 
 				// This dynamically sets each event to a separate div in the HTML.
@@ -83,9 +87,10 @@ $(document).ready(function () {
 									${eventLocation}
 									<br>
 									Age Restriction: ${eventAge}
-								</p>
+                                </p>
+                                <h6><a href="${eventURI}">View On Songkick</a></h6>
 								<div class="text-right"> <!-- text-right = text-align: right -->
-								  <a href="events.html" class="btn">Get Info</a>
+                                    <a class="btn eventBtn" type="button" href="#eventInfoModal" data-index="${i}">Get Info</a>
 								</div>
 						  </div>
 						</div>
@@ -99,7 +104,7 @@ $(document).ready(function () {
 		var cityName = $("#locationInput").val();      
 	
 		$.ajax({
-			url: "https://api.songkick.com/api/3.0/search/locations.json?query="+cityName+"&apikey="+songKickKey,
+			url: "https://api.songkick.com/api/3.0/search/locations.json?query=" + cityName + "&apikey=" + songKickKey,
 			method: "GET",
 		}).then(function (responseCity) {
 			console.log(responseCity);
@@ -115,13 +120,18 @@ $(document).ready(function () {
 	// This uses the city's ID to search for the city's event calendar.
 	getCityEvents = (id) => {
 		$.ajax({
-			url: "https://api.songkick.com/api/3.0/metro_areas/"+id+"/calendar.json?apikey="+songKickKey,
-			method: "GET"
+			url: "https://api.songkick.com/api/3.0/metro_areas/" + id + "/calendar.json?apikey=" + songKickKey,
+            method: "GET",
+            error: function() {
+                $("#emptyInputError").removeClass("hide");
+            }
 		}).then(function(responseCityCalendar) {
-			console.log(responseCityCalendar);
+            console.log(responseCityCalendar);
+            
+            $("#emptyInputError").addClass("hide");
 
 			// This puts the city's events array into a variable.
-			cityEventArr = responseCityCalendar.resultsPage.results.event;
+			eventArr = responseCityCalendar.resultsPage.results.event;
 
 			// This puts an events name and info into variables.
 			var eventName = responseCityCalendar.resultsPage.results.event[0].displayName;
@@ -132,31 +142,33 @@ $(document).ready(function () {
 			var eventName;
 			
 			// For loop to cycle through the array of events.
-			for (var i = 0; i < cityEventArr.length; i++){
+			for (var i = 0; i < eventArr.length; i++){
 				
 				// This finds the artist's ID for each event in the loop to display a picture.
 				eventArtist = responseCityCalendar.resultsPage.results.event[i].performance[0].artist.id;
 				
 				// This sets each event name to a variable.
-				eventName = cityEventArr[i].displayName;
+				eventName = eventArr[i].displayName;
 
 				// This sets each event's age restriction to a variable
-				eventAge = cityEventArr[i].ageRestriction;
+				eventAge = eventArr[i].ageRestriction;
 
 				// This sets each event's city name to a variable.
-				eventLocation = cityEventArr[i].location.city;
+				eventLocation = eventArr[i].location.city;
 
 				// This puts an events latitude into a variable.
 				eventLat = responseCityCalendar.resultsPage.results.event[i].location.lat;
 
 				// This puts an events longitude into a variable.
-				eventLng = responseCityCalendar.resultsPage.results.event[i].location.lng;
+                eventLng = responseCityCalendar.resultsPage.results.event[i].location.lng;
+                
+                eventURI = responseCityCalendar.resultsPage.results.event[i].uri;
 				
 				// If statement to check condition of age restriction and return an answer if null.
 				if (!eventAge) {
 					eventAge = "None."
 				} else {
-					eventAge = cityEventArr[i].ageRestriction;
+					eventAge = eventArr[i].ageRestriction;
 				}
 				// This dynamically sets each event to a separate div in the HTML.
 				$(`<div class="col-sm">
@@ -169,20 +181,22 @@ $(document).ready(function () {
 									${eventLocation}
 									<br>
 								  Age Restriction: ${eventAge}
-								</p>
+                                </p>
+                                <h6><a target="_blank" href="${eventURI}">View On Songkick</a></h6>
 								<div class="text-right"> <!-- text-right = text-align: right -->
-                                    <a class="btn" type="button" href="#eventInfoModal">Get Info</a>
-								</div>
+                                    <a class="btn eventBtn" type="button" href="#eventInfoModal" data-index="${i}">Get Info</a>
+                                </div>
 						  </div>
 						</div>
-					</div>`).appendTo("#event-listings");
+                    </div>`).appendTo("#event-listings");
 			}
-		});
+        });
+        
 	}
 
 	$("#searchBtnArtist").on("click", function() {
 		$("#event-listings").empty();
-		$("#eventsCard").removeClass("hide");
+        $("#eventsCard").removeClass("hide");
 		getArtist();
 	});
 
@@ -190,9 +204,11 @@ $(document).ready(function () {
 		$("#event-listings").empty();
 		$("#eventsCard").removeClass("hide");
 		getCity();
-	});
+    });
 
-	//$(document).on('click', '.eventBtn', function() {
-		//console.log(eventArr[$(this).attr("data-event")])
-	//})
+    $("#zomatoWidget").attr("src", "https://www.zomato.com/widgets/res_search_widget.php?city_id=1033&theme=red&hideCitySearch=on&hideResSearch=on&widgetType=large&sort=popularity")
+
+	$(document).on('click', '.eventBtn', function() {
+        $("#eventModalName").text(eventArr[parseInt($(this).attr("data-index"))].displayName);
+	})
 });
