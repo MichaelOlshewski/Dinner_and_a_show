@@ -190,9 +190,66 @@ $(document).ready(function () {
 						</div>
                     </div>`).appendTo("#event-listings");
 			}
-        });
-        
+        });    
 	}
+
+	
+	getCityId = (lat, long) => {
+		$.ajax({
+			url: "https://developers.zomato.com/api/v2.1/cities?lat=" + songKLat + "&lon=" + songKLong,
+			method: "GET",
+			headers: {'user-key': '4715989bdd71056d9e7eafc7a7e0536b'}
+		}).then(function(cityIdResponse) {
+			console.log(cityIdResponse);
+			var zomatoCityId = response.location_suggestions[0].id;
+		});
+		
+	};
+
+	var lat;
+	var lng;
+
+	// Initialize and add the map
+    function initMap() {
+		// get an array of the points of interest
+  
+		var pointsOfInterest = [
+		  {
+			lat: 40.7484,
+			long: -73.9857
+		  },
+		  {
+			lat: 40.7077,
+			long: -74.0080
+		  },
+		  {
+			lat: 40.7812,
+			long: -73.9665
+		  },
+		]
+  
+		drawMap(pointsOfInterest)
+	}
+  
+	function drawMap(lat, lng) {
+		// The location of the Venue
+		var hlywdbwl = new google.maps.LatLng(lat, lng);
+		// songkick will
+		var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: hlywdbwl });
+  
+		// The center will be for the first item in array
+  
+		/*for (var i = 0; i < pointsOfInterest.length; i++) {
+		  var pos = new google.maps.LatLng(pointsOfInterest[i].lat, pointsOfInterest[i].long);
+		  var marker = new google.maps.Marker({ position: pos, map: map });
+		}*/
+		
+		var pos = new google.maps.LatLng(lat, lng);
+		var marker = new google.maps.Marker({ position: pos, map: map });
+	}
+
+
+
 
 	$("#searchBtnArtist").on("click", function() {
 		$("#event-listings").empty();
@@ -206,9 +263,22 @@ $(document).ready(function () {
 		getCity();
     });
 
-    $("#zomatoWidget").attr("src", "https://www.zomato.com/widgets/res_search_widget.php?city_id=1033&theme=red&hideCitySearch=on&hideResSearch=on&widgetType=large&sort=popularity")
-
 	$(document).on('click', '.eventBtn', function() {
-        $("#eventModalName").text(eventArr[parseInt($(this).attr("data-index"))].displayName);
+		$("#eventModalName").text(eventArr[parseInt($(this).attr("data-index"))].displayName);
+		lat = eventArr[parseInt($(this).attr("data-index"))].location.lat;
+		lng = eventArr[parseInt($(this).attr("data-index"))].location.lng;
+		console.log(lat);
+		console.log(lng);
+		drawMap(lat, lng);
+		$.ajax({
+			url: "https://developers.zomato.com/api/v2.1/cities?lat=" + lat + "&lon=" + lng,
+			method: "GET",
+			headers: {'user-key': '4715989bdd71056d9e7eafc7a7e0536b'}
+		}).then(function(cityIdResponse) {
+			console.log(cityIdResponse);
+			var zomatoCityId = cityIdResponse.location_suggestions[0].id;
+			$("#zomatoWidget").attr("src", `https://www.zomato.com/widgets/res_search_widget.php?lat=${lat}&lon=${lng}&theme=dark&hideCitySearch=on&hideResSearch=on&widgetType=large&sort=distance`)
+		});
+		$("#pwrdBySongKick").attr("href", eventArr[$(this).attr("data-index")].uri)
 	})
 });
