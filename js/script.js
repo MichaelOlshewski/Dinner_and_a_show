@@ -252,12 +252,14 @@ $(document).ready(function () {
 
 
 	$("#searchBtnArtist").on("click", function() {
+		$("#eventsCards").removeClass("hide");
 		$("#event-listings").empty();
         $("#eventsCard").removeClass("hide");
 		getArtist();
 	});
 
 	$("#searchBtnCity").on("click", function() {
+		$("#eventsCards").removeClass("hide");
 		$("#event-listings").empty();
 		$("#eventsCard").removeClass("hide");
 		getCity();
