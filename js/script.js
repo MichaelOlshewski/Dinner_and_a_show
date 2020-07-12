@@ -208,41 +208,12 @@ $(document).ready(function () {
 
 	var lat;
 	var lng;
-
-	// Initialize and add the map
-    function initMap() {
-		// get an array of the points of interest
-  
-		var pointsOfInterest = [
-		  {
-			lat: 40.7484,
-			long: -73.9857
-		  },
-		  {
-			lat: 40.7077,
-			long: -74.0080
-		  },
-		  {
-			lat: 40.7812,
-			long: -73.9665
-		  },
-		]
-  
-		drawMap(pointsOfInterest)
-	}
   
 	function drawMap(lat, lng) {
 		// The location of the Venue
 		var hlywdbwl = new google.maps.LatLng(lat, lng);
 		// songkick will
 		var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: hlywdbwl });
-  
-		// The center will be for the first item in array
-  
-		/*for (var i = 0; i < pointsOfInterest.length; i++) {
-		  var pos = new google.maps.LatLng(pointsOfInterest[i].lat, pointsOfInterest[i].long);
-		  var marker = new google.maps.Marker({ position: pos, map: map });
-		}*/
 		
 		var pos = new google.maps.LatLng(lat, lng);
 		var marker = new google.maps.Marker({ position: pos, map: map });
