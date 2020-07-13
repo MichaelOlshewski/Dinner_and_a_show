@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+	var production = true;
+
 	// Global Variables
 	var songKickKey = "1GlKTntzLGzcOL9Q";
     var eventArr = [];
@@ -12,7 +14,9 @@ $(document).ready(function () {
 			url: "https://api.songkick.com/api/3.0/search/artists.json?apikey=" + songKickKey + "&query=" + artistName,
 			method: "GET",
 		}).then(function(responseArtist) {
-			console.log(responseArtist);
+			if (!production) {
+				console.log(responseArtist);
+			}
 
 			// This pulls the artist's ID number from the returned object.
 			var artistID = responseArtist.resultsPage.results.artist[0].id;
@@ -33,7 +37,9 @@ $(document).ready(function () {
                 $("#emptyInputError").removeClass("hide");
             }
 		}).then(function(responseArtistCalendar) {
-            console.log(responseArtistCalendar);
+            if (!production) {
+				console.log(responseArtistCalendar);
+			}
             
             $("#emptyInputError").addClass("hide")
 
@@ -107,8 +113,10 @@ $(document).ready(function () {
 			url: "https://api.songkick.com/api/3.0/search/locations.json?query=" + cityName + "&apikey=" + songKickKey,
 			method: "GET",
 		}).then(function (responseCity) {
-			console.log(responseCity);
-
+			if (!production) {
+				console.log(responseCity);
+			}
+			
 			// This pulls the city's ID number from the returned object.
 			var cityID = responseCity.resultsPage.results.location[0].metroArea.id;
 
@@ -126,7 +134,9 @@ $(document).ready(function () {
                 $("#emptyInputError").removeClass("hide");
             }
 		}).then(function(responseCityCalendar) {
-            console.log(responseCityCalendar);
+			if (!production) {
+				console.log(responseCityCalendar);
+			}
             
             $("#emptyInputError").addClass("hide");
 
@@ -214,7 +224,7 @@ $(document).ready(function () {
 		var hlywdbwl = new google.maps.LatLng(lat, lng);
 		// songkick will
 		var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: hlywdbwl });
-		
+
 		var pos = new google.maps.LatLng(lat, lng);
 		var marker = new google.maps.Marker({ position: pos, map: map });
 	}
