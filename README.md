@@ -35,4 +35,4 @@ We chose to create a site that takes user search inputs to search for a concert 
 https://michaelolshewski.github.io/Dinner-and-a-show/
 
 ### __Image of 'index.html'__
-![index.html](/images/dinner-and-a-show.png)
+![index.html](/images/dinner_and_a_show.png)
