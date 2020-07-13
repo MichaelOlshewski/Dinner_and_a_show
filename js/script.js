@@ -210,7 +210,10 @@ $(document).ready(function () {
 			method: "GET",
 			headers: {'user-key': '4715989bdd71056d9e7eafc7a7e0536b'}
 		}).then(function(cityIdResponse) {
-			console.log(cityIdResponse);
+			if (!production) {
+				console.log(cityIdResponse);
+			}
+			
 			var zomatoCityId = response.location_suggestions[0].id;
 		});
 		
@@ -250,15 +253,19 @@ $(document).ready(function () {
 		$("#eventModalName").text(eventArr[parseInt($(this).attr("data-index"))].displayName);
 		lat = eventArr[parseInt($(this).attr("data-index"))].location.lat;
 		lng = eventArr[parseInt($(this).attr("data-index"))].location.lng;
-		console.log(lat);
-		console.log(lng);
+		if (!production) {
+			console.log(lat);
+			console.log(lng);
+		}
 		drawMap(lat, lng);
 		$.ajax({
 			url: "https://developers.zomato.com/api/v2.1/cities?lat=" + lat + "&lon=" + lng,
 			method: "GET",
 			headers: {'user-key': '4715989bdd71056d9e7eafc7a7e0536b'}
 		}).then(function(cityIdResponse) {
-			console.log(cityIdResponse);
+			if (!production) {
+				console.log(cityIdResponse);
+			}
 			var zomatoCityId = cityIdResponse.location_suggestions[0].id;
 			$("#zomatoWidget").attr("src", `https://www.zomato.com/widgets/res_search_widget.php?lat=${lat}&lon=${lng}&theme=dark&hideCitySearch=on&hideResSearch=on&widgetType=large&sort=distance`)
 		});
